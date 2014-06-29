@@ -154,7 +154,7 @@ value key_hashtbl_find dir file k = hashtbl_find dir file (Db2.key2_of_key k);
 (* string person index version 2 *)
 
 type string_person_index2 =
-  { is_first_name : bool;
+  { field : string;
     index_of_first_char : list (string * int);
     ini : mutable string;
     curr_i : mutable int;
@@ -237,7 +237,9 @@ value spi2_first db2 spi (f1, f2) s = do {
     | None -> None ]
   in
   let first_patched =
-    let patched_sl = sorted_patched_person_strings db2 spi.is_first_name in
+    let patched_sl =
+      sorted_patched_person_strings db2 (spi.field = "first_name")
+    in
     loop patched_sl where rec loop =
       fun
       [ [(s2_ord, s2) :: sl] ->
@@ -292,7 +294,9 @@ value spi2_next db2 spi (f1, f2) need_whole_list =
     | None -> None ]
   in
   let next_patched =
-    let patched_sl = sorted_patched_person_strings db2 spi.is_first_name in
+    let patched_sl =
+      sorted_patched_person_strings db2 (spi.field = "first_name")
+    in
     loop patched_sl where rec loop =
       fun
       [ [(s2_ord, s2) :: sl] ->
@@ -318,7 +322,7 @@ value spi2_next db2 spi (f1, f2) need_whole_list =
 
 value spi2gen_add pl db2 spi s =
   let proj =
-    if spi.is_first_name then fun p -> p.first_name
+    if spi.field = "first_name" then fun p -> p.first_name
     else fun p -> p.surname
   in
   Hashtbl.fold
@@ -362,6 +366,11 @@ value strings2_of_fsname db2 f s =
   hashtbl_find_all dir "string_of_crush.ht" k
 ;
 
+value strings2_of_field db2 f s =
+  let dir = List.fold_left Filename.concat db2.bdir2 ["person"; f] in
+  hashtbl_find_all dir "string_of_crush.ht" s
+;
+
 value persons2_of_name db2 s =
   let s = Name.crush_lower s in
   let dir = Filename.concat db2.bdir2 "person_of_name" in
@@ -378,7 +387,19 @@ value persons_of_first_name_or_surname2 db2 is_first_name = do {
   let ic = open_in_bin index_ini_fname in
   let iofc : list (string * int) = input_value ic in
   close_in ic;
-  {is_first_name = is_first_name; index_of_first_char = iofc; ini = "";
+  {field = f2; index_of_first_char = iofc; ini = "";
+   curr_i = 0; curr_s = ""}
+};
+
+value persons_of_field2 db2 field = do {
+  let f1 = "person" in
+  let f2 = field in
+  let fdir = List.fold_left Filename.concat db2.bdir2 [f1; f2] in
+  let index_ini_fname = Filename.concat fdir "index.ini" in
+  let ic = open_in_bin index_ini_fname in
+  let iofc : list (string * int) = input_value ic in
+  close_in ic;
+  {field = field; index_of_first_char = iofc; ini = "";
    curr_i = 0; curr_s = ""}
 };
 

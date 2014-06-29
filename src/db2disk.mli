@@ -37,7 +37,7 @@ type string_person =
 ;
 
 type string_person_index2 =
-  { is_first_name : bool;
+  { field : string;
     index_of_first_char : list (string * int);
     ini : mutable string;
     curr_i : mutable int;
@@ -66,8 +66,10 @@ value spi2gen_find :
 value disk_person2_of_key : db2 -> string -> string -> int -> option iper;
 value person2_of_key : db2 -> string -> string -> int -> option iper;
 value strings2_of_fsname : db2 -> string -> string -> list int;
+value strings2_of_field : db2 -> string -> string -> list int;
 value persons2_of_name : db2 -> string -> list iper;
 value persons_of_first_name_or_surname2 : db2 -> bool -> string_person_index2;
+value persons_of_field2 : db2 -> string -> string_person_index2;
 
 value load_couples_array2 : db2 -> unit;
 

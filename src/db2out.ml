@@ -194,7 +194,7 @@ value add_name ht s pos =
 
 value make_string_of_crush_index bpdir =
   List.iter
-    (fun (field, is_surname) -> do {
+    (fun field -> do {
        let field_d = Filename.concat bpdir field in
        let pos_1st = do {
          let ic_acc = open_in_bin (Filename.concat field_d "access") in
@@ -220,7 +220,7 @@ value make_string_of_crush_index bpdir =
              assert (Obj.tag (Obj.repr s) = Obj.string_tag);
              if s <> "?" then do {
                add_name ht s pos;
-               if is_surname then
+               if field = "surname" then
                  List.iter (fun s -> add_name ht s pos)
                    (Mutil.surnames_pieces s)
                else ();
@@ -239,7 +239,10 @@ value make_string_of_crush_index bpdir =
        }
        else ();
     })
-   [("first_name", False); ("surname", True)]
+    ["first_name"; "surname"; "public_name"; (*"qualifiers"; "aliases";
+     "first_names_aliases"; "surnames_aliases"; "titles";*) "occupation";
+     "birth_place"; "birth_src"; "baptism_place"; "baptism_src";
+     "death_place"; "death_src"; "burial_place"; "burial_src"; "psources"]
 ;
 
 value make_person_of_string_index bpdir =
@@ -257,7 +260,14 @@ value make_person_of_string_index bpdir =
          match
            try Some (input_binary_int ic_acc) with [ End_of_file -> None ]
          with
-         [ Some pos -> do { Hashtbl.add ht pos i; loop (i + 1) }
+         [ Some pos ->
+             do {
+               (* On vérifie que le champ n'est pas vide pour l'ajouter, *)
+               (* i.e si pos = 25, alors la chaîne est vide.             *)
+               if pos = 25 then ()
+               else Hashtbl.add ht pos i;
+               loop (i + 1)
+             }
          | None -> () ];
        close_in ic_acc;
        output_hashtbl field_d "person_of_string.ht" ht;
@@ -267,7 +277,10 @@ value make_person_of_string_index bpdir =
        }
        else ();
      })
-    ["first_name"; "surname"]
+    ["first_name"; "surname"; "public_name"; (*"qualifiers"; "aliases";
+     "first_names_aliases"; "surnames_aliases"; "titles";*) "occupation";
+     "birth_place"; "birth_src"; "baptism_place"; "baptism_src";
+     "death_place"; "death_src"; "burial_place"; "burial_src"; "psources"]
 ;
 
 value read_field (ic_acc, ic_dat) i = do {
@@ -319,7 +332,7 @@ value make_name_index base_d nbper = do {
     Printf.eprintf "name index...\n";
     flush stderr;
   }
-  else ();        
+  else ();
   let ic2_list =
     List.map
       (fun (d, f) ->
@@ -441,6 +454,78 @@ value start_with s p =
   String.sub s 0 (String.length p) = p
 ;
 
+value make_gen_index bdir f1 f2 = do {
+  let fdir = List.fold_left Filename.concat bdir [f1; f2] in
+  let index_dat_fname = Filename.concat fdir "index.dat" in
+  let index_ini_fname = Filename.concat fdir "index.ini" in
+  let pos_1st = do {
+    let ic_acc = open_in_bin (Filename.concat fdir "access") in
+    let pos = try input_binary_int ic_acc with [ End_of_file -> -1 ] in
+    close_in ic_acc;
+    pos
+  }
+  in
+  let (list, len) =
+    if pos_1st >= 0 then do {
+      let data_fname = Filename.concat fdir "data" in
+      let ic = open_in_bin data_fname in
+      seek_in ic pos_1st;
+      loop [] 0 pos_1st where rec loop list len pos =
+      match
+        try Some (Iovalue.input ic : string) with
+        [ End_of_file -> None ]
+      with
+      [ Some s -> do {
+          assert (Obj.tag (Obj.repr s) = Obj.string_tag);
+          let list = [(s, pos) :: list] in
+          loop list (len + 1) (pos_in ic)
+        }
+      | None -> let _ = close_in ic in (list, len) ]
+    }
+    else ([], 0)
+  in
+  let list = List.sort compare list in
+  let a = Array.make len ("", 0) in
+  let iofc =
+    loop [] 0 list where rec loop rev_iofc i =
+      fun
+      [ [] -> List.rev rev_iofc
+      | [((s, _) as s_pos) :: list] -> do {
+          a.(i) := s_pos;
+          let rev_iofc =
+            match rev_iofc with
+            [ [(prev_s, _) :: _] ->
+                if s = "" && i <> 0 then (* pad *) rev_iofc
+                else if prev_s = "" then [(s, i) :: rev_iofc]
+                else
+                  let prev_nbc = Name.nbc prev_s.[0] in
+                  let nbc = Name.nbc s.[0] in
+                  if prev_nbc = nbc && nbc > 0 &&
+                     nbc <= String.length prev_s &&
+                     nbc <= String.length s &&
+                     String.sub prev_s 0 nbc = String.sub s 0 nbc
+                  then
+                    rev_iofc
+                  else
+                    [(s, i) :: rev_iofc]
+            | [] -> [(s, i)] ]
+          in
+          loop rev_iofc (i + 1) list
+        } ]
+  in
+  let oc = open_out_bin index_dat_fname in
+  output_value oc (a : array (string * int));
+  close_out oc;
+  let oc = open_out_bin (Filename.concat fdir "index.acc") in
+  let _ : int =
+    Iovalue.output_array_access oc (Array.get a) (Array.length a) 0
+  in
+  close_out oc;
+  let oc = open_out_bin index_ini_fname in
+  output_value oc (iofc : list (string * int));
+  close_out oc;
+};
+
 value make_index bdir particles f2 = do {
   let f1 = "person" in
   let fdir = List.fold_left Filename.concat bdir [f1; f2] in
@@ -530,4 +615,34 @@ value make_indexes bbdir nb_per particles = do {
   make_name_index bbdir nb_per;
   make_index bbdir particles "first_name";
   make_index bbdir particles "surname";
+
+  List.iter
+    (fun field -> do {
+       if Mutil.verbose.val then do {
+         Printf.eprintf "indexes %s..." field;
+         flush stderr;
+       }
+       else ();
+       make_gen_index bbdir "person" field;
+       if Mutil.verbose.val then do {
+         Printf.eprintf "\n";
+         flush stderr;
+       }
+       else ();
+      })
+    ["public_name"; "qualifiers"; "aliases"; "first_names_aliases";
+     "surnames_aliases"; "titles"; "occupation"; "birth_place";
+     "birth_place"; "birth_src"; "baptism_place"; "baptism_src";
+     "death_place"; "death_src"; "burial_place"; "burial_src";
+     "psources"];
+
+(*
+  make_gen_index bbdir "family" "marriage";
+  make_gen_index bbdir "family" "marriage_place";
+  make_gen_index bbdir "family" "marriage_src";
+  make_gen_index bbdir "family" "divorce";
+  make_gen_index bbdir "family" "comment";
+  make_gen_index bbdir "family" "origin_file";
+  make_gen_index bbdir "family" "fsources";
+*)
 };

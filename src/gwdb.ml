@@ -154,14 +154,14 @@ value spi1_fun =
 value spi2_fun =
   {spi_first (db2, spi) s =
      let f1 = "person" in
-     let f2 = if spi.is_first_name then "first_name" else "surname" in
+     let f2 = spi.field in
      match spi2_first db2 spi (f1, f2) s with
      [ Sp pos -> Istr2 db2 (f1, f2) pos
      | SpNew s2 -> Istr2New db2 s2 ]
    ;
    spi_next (db2, spi) istr need_whole_list =
      let f1 = "person" in
-     let f2 = if spi.is_first_name then "first_name" else "surname" in
+     let f2 = spi.field in
      let (sp, dlen) = spi2_next db2 spi (f1, f2) need_whole_list in
      let r =
        match sp with
@@ -960,11 +960,13 @@ type base =
     persons_of_name : string -> list iper;
     persons_of_first_name : unit -> string_person_index;
     persons_of_surname : unit -> string_person_index;
+    persons_of_field : string -> string_person_index;
     base_visible_get : (person -> bool) -> int -> bool;
     base_visible_write : unit -> unit;
     base_particles : unit -> list string;
     base_strings_of_first_name : string -> list istr;
     base_strings_of_surname : string -> list istr;
+    base_strings_of_field : string -> string -> list istr;
     load_ascends_array : unit -> unit;
     load_unions_array : unit -> unit;
     load_couples_array : unit -> unit;
@@ -1111,6 +1113,7 @@ value base1 base =
      persons_of_name = base.func.Dbdisk.persons_of_name;
      persons_of_first_name () = Spi base.func.Dbdisk.persons_of_first_name;
      persons_of_surname () = Spi base.func.Dbdisk.persons_of_surname;
+     persons_of_field _ = failwith "not impl persons_of_field";
      base_visible_get f =
        base.data.visible.v_get
          (fun p ->
@@ -1119,6 +1122,7 @@ value base1 base =
      base_particles () = base.data.particles;
      base_strings_of_first_name = base_strings_of_first_name_or_surname;
      base_strings_of_surname = base_strings_of_first_name_or_surname;
+     base_strings_of_field = failwith "not impl base_strings_of_field";
      load_ascends_array = base.data.ascends.load_array;
      load_unions_array = base.data.unions.load_array;
      load_couples_array = base.data.couples.load_array;
@@ -1164,6 +1168,19 @@ value base1 base =
 
 value base2 db2 =
   let base_strings_of_first_name_or_surname field proj s =
+    let posl = strings2_of_fsname db2 field s in
+    let istrl = List.map (fun pos -> Istr2 db2 ("person", field) pos) posl in
+    let s = Name.crush_lower s in
+    let sl =
+      Hashtbl.fold
+        (fun _ p sl ->
+           if Name.crush_lower (proj p) = s then [proj p :: sl] else sl)
+        db2.patches.h_person []
+    in
+    let sl = list_uniq (List.sort compare sl) in
+    List.fold_left (fun istrl s -> [Istr2New db2 s :: istrl]) istrl sl
+  in
+  let base_strings_of_field2 field proj s =
     let posl = strings2_of_fsname db2 field s in
     let istrl = List.map (fun pos -> Istr2 db2 ("person", field) pos) posl in
     let s = Name.crush_lower s in
@@ -1263,10 +1280,9 @@ value base2 db2 =
      delete_family ifam = C_base.delete_family self ifam;
      person_of_key fn sn oc = person2_of_key db2 fn sn oc;
      persons_of_name s = persons2_of_name db2 s;
-     persons_of_first_name () =
-       Spi2 db2 (persons_of_first_name_or_surname2 db2 True);
-     persons_of_surname () =
-       Spi2 db2 (persons_of_first_name_or_surname2 db2 False);
+     persons_of_first_name () = Spi2 db2 (persons_of_field2 db2 "first_name");
+     persons_of_surname () = Spi2 db2 (persons_of_field2 db2 "surname");
+     persons_of_field field = Spi2 db2 (persons_of_field2 db2 field);
      base_visible_get f = failwith "not impl visible_get";
      base_visible_write () = failwith "not impl visible_write";
      base_particles () =
@@ -1276,6 +1292,25 @@ value base2 db2 =
          (fun p -> p.first_name) s;
      base_strings_of_surname s =
        base_strings_of_first_name_or_surname "surname" (fun p -> p.surname) s;
+     base_strings_of_field field s =
+       let proj =
+         match field with
+         [ "surname" -> (fun p -> p.surname)
+         | "first_name" -> (fun p -> p.first_name)
+         | "public_name" -> (fun p -> p.public_name)
+         | "occupation" -> (fun p -> p.occupation)
+         | "birth_place" -> (fun p -> p.birth_place)
+         | "birth_src" -> (fun p -> p.birth_src)
+         | "baptism_place" -> (fun p -> p.baptism_place)
+         | "baptism_src" -> (fun p -> p.baptism_src)
+         | "death_place" -> (fun p -> p.death_place)
+         | "death_src" -> (fun p -> p.death_src)
+         | "burial_place" -> (fun p -> p.burial_place)
+         | "burial_src" -> (fun p -> p.burial_src)
+         | "psources" -> (fun p -> p.psources)
+         | _ -> failwith "base_strings_of_field" ]
+       in
+       base_strings_of_field2 field proj s;
      load_ascends_array () =
        do {
          eprintf "*** loading ascends array\n";
@@ -1392,11 +1427,13 @@ value person_of_key b = b.person_of_key;
 value persons_of_name b = b.persons_of_name;
 value persons_of_first_name b = b.persons_of_first_name ();
 value persons_of_surname b = b.persons_of_surname ();
+value persons_of_field b = b.persons_of_field;
 value base_visible_get b = b.base_visible_get;
 value base_visible_write b = b.base_visible_write ();
 value base_particles b = b.base_particles ();
 value base_strings_of_first_name b = b.base_strings_of_first_name;
 value base_strings_of_surname b = b.base_strings_of_surname;
+value base_strings_of_field b = b.base_strings_of_field;
 value load_ascends_array b = b.load_ascends_array ();
 value load_unions_array b = b.load_unions_array ();
 value load_couples_array b = b.load_couples_array ();

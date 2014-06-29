@@ -487,6 +487,11 @@ value family_m conf base =
       match find_person_in_env conf base "" with
       [ Some p -> Perso.print_what_links conf base p
       | _ -> very_unknown conf ]
+  | Some "LISTS" -> Allp.print_lists conf base
+  | Some "LIST_FIELD" ->
+      match p_getenv conf.env "f" with
+      [ Some field -> Allp.print_field_values conf base field
+      | None -> incorrect_request conf ]
   | Some "LL" -> BirthDeath.print_longest_lived conf base
   | Some "LM" when conf.wizard || conf.friend ->
       BirthDeath.print_marriage conf base
@@ -597,6 +602,10 @@ value family_m conf base =
       match p_getenv conf.env "v" with
       [ Some v -> Some.first_name_print conf base v
       | None -> Alln.print_first_names conf base ]
+  | Some "PERS_FIELD" ->
+      match p_getenv conf.env "f" with
+      [ Some field -> Allp.print_all_persons_of_field conf base field
+      | None -> incorrect_request conf ]
   | Some "POP_PYR" when conf.wizard || conf.friend ->
       BirthDeath.print_population_pyramid conf base
   | Some "PS" -> Place.print_all_places_surnames conf base

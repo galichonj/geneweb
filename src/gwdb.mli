@@ -121,6 +121,7 @@ value person_of_key : base -> string -> string -> int -> option iper;
 value persons_of_name : base -> string -> list iper;
 value persons_of_first_name : base -> string_person_index;
 value persons_of_surname : base -> string_person_index;
+value persons_of_field : base -> string -> string_person_index;
 
 value spi_first : string_person_index -> string -> istr;
   (* first [first/sur]name starting with that string *)
@@ -134,6 +135,7 @@ value base_visible_write : base -> unit;
 value base_particles : base -> list string;
 value base_strings_of_first_name : base -> string -> list istr;
 value base_strings_of_surname : base -> string -> list istr;
+value base_strings_of_field : base -> string -> string -> list istr;
 
 value load_ascends_array : base -> unit;
 value load_unions_array : base -> unit;
