@@ -743,7 +743,7 @@ eo: .
 es: .
 et: &nbsp;
 fi: .
-fr: &nbsp;
+fr: &#8239;
 he: ,
 is: .
 it: .
