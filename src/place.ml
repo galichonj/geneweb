@@ -66,9 +66,13 @@ value get_all conf base =
   let ht = Hashtbl.create 5003 in
   let ht_add istr p =
     let (cnt, _) =
-      try Hashtbl.find ht (istr, get_surname p) with
+      try
+        let (cnt, ipl) = Hashtbl.find ht (istr, get_surname p) in
+        let cnt = (cnt, [get_key_index p :: ipl]) in
+        do { Hashtbl.replace ht (istr, get_surname p) cnt; cnt }
+      with
       [ Not_found ->
-          let cnt = (ref 0, get_key_index p) in
+          let cnt = (ref 0, [get_key_index p]) in
           do { Hashtbl.add ht (istr, get_surname p) cnt; cnt } ]
     in
     incr cnt
@@ -130,11 +134,11 @@ value get_all conf base =
     let list = ref [] in
     let len = ref 0 in
     Hashtbl.iter
-      (fun (istr_pl, _) (cnt, ip) ->
+      (fun (istr_pl, _) (cnt, ipl) ->
          let s = Util.string_with_macros conf [] (sou base istr_pl) in
          let s = fold_place inverted s in
          if s <> [] && (ini = "" || List.hd s = ini) then do {
-           list.val := [(s, cnt.val, ip) :: list.val]; incr len
+           list.val := [(s, cnt.val, ipl) :: list.val]; incr len
          }
          else ())
       ht;
@@ -153,11 +157,18 @@ value print_html_places_surnames conf base list =
     [ Some "yes" -> True
     | _ -> False ]
   in
-  let print_sn len p sn sep =
+  let print_sn len ipl sn sep =
     do {
       Wserver.wprint "%s<a href=\"%s" sep (commd conf);
       if link_to_ind then
-        Wserver.wprint "%s" (acces conf base p)
+        let ips =
+          List.fold_left
+            (fun s ip ->
+               let i = string_of_int (Adef.int_of_iper ip) in
+               if s = "" then i else s ^ "," ^ i)
+            "" ipl
+        in
+        Wserver.wprint "m=PP;v=%s" ips
       else
         Wserver.wprint "m=N;v=%s" (code_varenv sn);
       Wserver.wprint "\">%s</a> (%d)" sn len
@@ -166,10 +177,15 @@ value print_html_places_surnames conf base list =
   let print_sn_list snl =
     let snl =
       List.map
-        (fun (len, ip) ->
-           let p = pget conf base ip in
-           let sn = p_surname base p in
-           (len, p, sn))
+        (fun (len, ipl) ->
+           let sn =
+             match ipl with
+             [ [] -> assert False
+             | [ip :: ipl] ->
+                let p = pget conf base ip in
+                p_surname base p ]
+           in
+           (len, ipl, sn))
         snl
     in
     let snl =
@@ -179,23 +195,23 @@ value print_html_places_surnames conf base list =
     in 
     let snl =
       List.fold_right
-        (fun (len, p, sn) ->
+        (fun (len, ipl, sn) ->
            fun
-           [ [(len1, p1, sn1) :: snl] ->
-               if sn = sn1 then [(len + len1, p, sn) :: snl]
-               else [(len, p, sn); (len1, p1, sn1) :: snl]
-           | [] -> [(len, p, sn)] ])
+           [ [(len1, ipl1, sn1) :: snl] ->
+               if sn = sn1 then [(len + len1, ipl @ ipl1, sn) :: snl]
+               else [(len, ipl, sn); (len1, ipl1, sn1) :: snl]
+           | [] -> [(len, ipl, sn)] ])
         snl []
     in
-    let (len, p, sn, snl) =
+    let (len, ipl, sn, snl) =
       match snl with
-      [ [(len, p, sn) :: snl] -> (len, p, sn, snl)
+      [ [(len, ipl, sn) :: snl] -> (len, ipl, sn, snl)
       | _ -> assert False ]
     in
     tag "li" begin
-      print_sn len p sn "";
+      print_sn len ipl sn "";
       List.iter
-        (fun (len, p, sn) -> print_sn len p sn ",\n")
+        (fun (len, ipl, sn) -> print_sn len ipl sn ",\n")
         snl;
       Wserver.wprint "\n";
     end
@@ -287,11 +303,11 @@ value print_all_places_surnames_short conf list =
 value print_all_places_surnames_long conf base list =
   let list =
     List.fold_left
-      (fun list (pl, len, ip) ->
+      (fun list (pl, len, ipl) ->
          match list with
          [ [(pl1, lpl1) :: list1] when pl = pl1 ->
-             [(pl1, [(len, ip) :: lpl1]) :: list1]
-         | _ -> [(pl, [(len, ip)]) :: list] ])
+             [(pl1, [(len, ipl) :: lpl1]) :: list1]
+         | _ -> [(pl, [(len, ipl)]) :: list] ])
       [] list
   in
   let rec sort_place_utf8 pl1 pl2 =
@@ -323,4 +339,42 @@ value print_all_places_surnames conf base =
   if ini = None && len > max_len.val then
     print_all_places_surnames_short conf list
   else print_all_places_surnames_long conf base list
+;
+
+value print_place_surname conf base =
+  let list =
+    match p_getenv conf.env "v" with
+    [ Some s ->
+        let list = List.map int_of_string (Util.explode s ',') in
+        let list = Mutil.list_uniq list in
+        List.map (fun ip -> poi base (Adef.iper_of_int ip)) list
+    | None -> [] ]
+  in
+  let title _ =
+    Wserver.wprint "%s / %s" (capitale (transl conf "place"))
+      (capitale (transl_nth conf "surname/surnames" 0))
+  in
+  do {
+    Hutil.header conf title;
+    print_link_to_welcome conf True;
+    if list = [] then ()
+    else
+      (* Construction de la table des sosa de la base *)
+      let () = Perso.build_sosa_ht conf base in
+      tag "ul" begin
+        List.iter
+          (fun p ->
+             do {
+               html_li conf;
+               Perso.print_sosa conf base p True;
+               Wserver.wprint "\n%s" (referenced_person_text conf base p);
+               Wserver.wprint "%s" (Date.short_dates_text conf base p);
+               stag "em" begin
+                 specify_homonymous conf base p False;
+               end;
+             })
+          list;
+      end;
+    Hutil.trailer conf
+  }
 ;

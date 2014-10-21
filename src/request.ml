@@ -598,6 +598,7 @@ value family_m conf base =
   | Some "POP_PYR" when conf.wizard || conf.friend ->
       BirthDeath.print_population_pyramid conf base
   | Some "PS" -> Place.print_all_places_surnames conf base
+  | Some "PP" -> Place.print_place_surname conf base
   | Some "R" ->
       match find_person_in_env conf base "" with
       [ Some p -> relation_print conf base p

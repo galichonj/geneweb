@@ -115,6 +115,8 @@ value create_env : string -> list (string * string);
 value capitale : string -> string;
 value index_of_next_char : string -> int -> int;
 
+value explode : string -> char -> list string;
+
 value open_etc_file : string -> option in_channel;
 value open_hed_trl : config -> string -> option in_channel;
 value open_templ : config -> string -> option in_channel;
