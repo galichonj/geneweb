@@ -2567,9 +2567,9 @@ value add_fam_norm gen r adop_list =
     in
     let fam_events = treat_fam_fevent gen r in
     let comment =
-      match find_field "NOTE" r.rsons with
-      [ Some r -> if r.rval <> "" && r.rval.[0] = '@' then "" else r.rval
-      | None -> "" ]
+      match find_all_fields "NOTE" r.rsons with
+      [ [] -> ""
+      | rl -> treat_notes gen rl ]
     in
     let (fsources, fsources_nt) =
       let (s, s_nt) = source gen r in
