@@ -1421,23 +1421,33 @@ value notes_from_source_record rl =
 
 value treat_notes gen rl =
   let lines = extract_notes gen rl in
-  let notes =
-    List.fold_left
-      (fun s (lab, n) ->
+  let buf = Buffer.create (List.length lines) in
+  let () =
+    List.iter
+      (fun (lab, n) ->
          let spc = String.length n > 0 && n.[0] = ' ' in
          let end_spc =
            String.length n > 1 && n.[String.length n - 1] = ' '
          in
          let n = strip_spaces n in
-         if s = "" then n ^ (if end_spc then " " else "")
-         else if lab = "CONT" || lab = "NOTE" then
-           s ^ "<br>\n" ^ n ^ (if end_spc then " " else "")
-         else if n = "" then s
-         else
-           s ^ (if spc then "\n" else "") ^ n ^ (if end_spc then " " else ""))
-      "" lines
+         if Buffer.length buf = 0 then do {
+           Buffer.add_string buf n;
+           Buffer.add_string buf (if end_spc then " " else "")
+         }
+         else if lab = "CONT" || lab = "NOTE" then do {
+           Buffer.add_string buf "<br>\n";
+           Buffer.add_string buf n;
+           Buffer.add_string buf (if end_spc then " " else "")
+         }
+         else if n = "" then ()
+         else do {
+           Buffer.add_string buf (if spc then "\n" else "");
+           Buffer.add_string buf n;
+           Buffer.add_string buf (if end_spc then " " else "")
+         })
+      lines
   in
-  strip_newlines notes
+  strip_newlines (Buffer.contents buf)
 ;
 
 value note gen r =
@@ -3302,12 +3312,31 @@ value check_undefined gen =
 ;
 
 value add_parents_to_isolated gen =
+  let ht_missing_children = Hashtbl.create 1001 in
+  (* Parfois, l'enfant n'a pas de tag FAMC, mais il est bien présent
+     dans la famille. Du coup, si on lui ajoute des parents tout de
+     suite, lors du finish base, on va se rendre compte qu'il est en
+     trop dans sa "vraie" famille et on va le supprimer, alors qu'on
+     veut re-créer la liaison. *)
+  let () =
+    loop 0 where rec loop i =
+      if i = gen.g_fam.tlen then ()
+      else
+        match gen.g_fam.arr.(i) with
+        [ Right3 _ _ des -> do {
+            Array.iter
+              (fun ip -> Hashtbl.add ht_missing_children ip True)
+              des.children;
+            loop (i + 1) }
+        | Left3 _ -> loop (i + 1) ]
+  in
   for i = 0 to gen.g_per.tlen - 1 do {
     match gen.g_per.arr.(i) with
     [ Right3 p a u ->
         if get_parents a = None &&
            Array.length (get_family u) = 0 && get_rparents p = [] &&
-           get_related p = []
+           get_related p = [] &&
+           not (Hashtbl.mem ht_missing_children (get_key_index p))
         then
           let fn = gen.g_str.arr.(Adef.int_of_istr (get_first_name p)) in
           let sn = gen.g_str.arr.(Adef.int_of_istr (get_surname p)) in
