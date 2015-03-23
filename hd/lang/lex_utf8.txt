@@ -558,6 +558,27 @@ oc: %t foguèt testimòni abans la naissença
 pt: %t foi testemunha antes do seu nascimento
 sv: %t var vittne innan hennes/hans död
 
+    %t witnessed the %s after his/her death
+de: %t war Zeuge bei der %s nach seinem Tod
+en: %t was a witness at a %s after their own death
+es: %t ha sido testigo de %s después de su muerte
+fr: %t a été témoin de %s après sa mort
+it: %t è stato testimone del %s dopo la sua morte
+
+    %t witnessed the %s before his/her birth
+de: %t war Zeuge bei der %s vor seiner Geburt
+en: %t was a witness at a %s before their own birth
+es: %t ha sido testigo de %s antes de su nacimiento
+fr: %t a été témoin de %s avant sa naissance
+it: %t è stato testimone del %s prima della sua nascita
+
+    %t's %s before his/her %s
+de: %t: %s vor seiner/ihrer %s
+en: %t: %s before their %s
+es: %t : %s antes de su %s
+fr: %t : %s avant son/sa %s
+it: %t : %s prima della suo/sua %s
+
     %t's sex is not coherent with his/her relations
 af: %t se geslag stem nie ooreen met sy/haar verwantskap nie
 bg: полът на %t не се съгласува с посочените взаимоотношения
@@ -1465,6 +1486,30 @@ sk: prístup
 sl: dostop
 sv: tillträde
 
+    accomplishment
+de: Verwirklichung
+en: Accomplishment
+es: cumplimiento
+fi: Loppuunsaattaminen
+fr: accomplissement
+it: compimento
+nl: Bekwaamheid
+no: Utførelse
+pt: concretização
+sv: Prestation
+
+    acquisition
+de: Akquisition
+en: Acquisition
+es: adquisición
+fi: Hankinta
+fr: acquisition
+it: acquisizione
+nl: Aankoop
+no: Anskaffelse
+pt: aquisição
+sv: Förvärvande
+
     add
 af: byvoeg
 bg: добавяне на
@@ -1550,6 +1595,18 @@ ro: adauga imagine
 ru: добавить :a: картинку
 sl: dodaj slika
 sv: lägg till bild
+
+    adhesion
+de: Beitritt
+en: Membership
+es: adhesión
+fi: Jäsenyys
+fr: adhésion
+it: adesione
+nl: Lidmaatschap
+no: Medlemskap
+pt: adesão
+sv: Medlemskap
 
     adoptive father/adoptive mother/adoptive parents
 af: aangenome vader/angenome moeder/aangenome ouers
@@ -2246,6 +2303,18 @@ sl: obletnice porok
 sv: bröllopsdagar
 zh:  结婚于今日的记录
 
+    annulation
+de: Aufhebung
+en: Annulment
+es: anulación
+fi: Kumoaminen
+fr: annulation
+it: annullamento
+nl: Nietigverklaring
+no: Annullering
+pt: anulação
+sv: Upphävande
+
     any individual in the base
 de: jede beliebige Person im Stammbaum
 en: any individual in the family tree
@@ -2453,6 +2522,18 @@ oc: lòc de baptisme
 pt: local de batismo
 sv: dop
 
+    baptismLDS
+de: Taufe HLT
+en: Baptism (LDS)
+es: bausitsmo LDS
+fi: Kaste (LSD)
+fr: baptême LDS
+it: battesimo LDS (mormonismo)
+nl: Doop (LDS)
+no: Dåp (LDS)
+pt: batismo LDS
+sv: Dop (LDS)
+
     baptized
 af: gedoop
 bg: кръстен/кръстена/кръстен(а)
@@ -2482,6 +2563,18 @@ ru: крещеный
 sk: pokrstený/pokrstená
 sl: krščen/krščena
 sv: döpt
+
+    bar mitzvah
+de: bar Mizwa
+en: Bar Mitzvah
+es: bar mitzvah
+fi: Bar Mitzvah
+fr: bar mitzvah
+it: bar mitzvah (ebraico)
+nl: Bar Mitswa
+no: Bar Mitzvah
+pt: bar mitzvah
+sv: Bar Mitzvah
 
     base index notes
 af: notas
@@ -2673,6 +2766,18 @@ ru: начиная с
 sk: začiatok
 sl: začetek
 sv: börjar
+
+    benediction
+de: Segnung
+en: Blessing
+es: bendición
+fi: Siunaaminen
+fr: bénédiction
+it: benedizione
+nl: Zegening
+no: Velsignelse
+pt: benção
+sv: Välsignelse
 
     between (date)
 af: tussen
@@ -3397,6 +3502,18 @@ sk: mená detí zmenené
 sl: spremenjena imena otrok
 sv: barnens namn ändrade
 
+    circumcision
+de: Beschneidung
+en: Circumcision
+es: circuncisión
+fi: Ympärileikkaus
+fr: circoncision
+it: circoncisione
+nl: Besnijdenis
+no: Omskjæring
+pt: circuncisão
+sv: Omskärellse
+
     click
 af: druk
 bg: щракнете
@@ -3578,6 +3695,30 @@ no: Inkluder usikre datoer
 oc: inclusir totes los conjunts
 pt: ter em conta as datas aproximadas
 sv: Jämför approxamativa datum
+
+    confirmation
+de: Firmung
+en: Confirmation
+es: confirmación
+fi: Konfirmaatio
+fr: confirmation
+it: cresima
+nl: Belijdenis
+no: Konfirmasjon
+pt: confirmação
+sv: Konfirmation
+
+    confirmation LDS
+de: Firmung HLT
+en: Confirmation (LDS)
+es: confirmación LDS
+fi: Konfirmaatio (LDS)
+fr: confirmation LDS
+it: cresima LDS (mormonismo)
+nl: Belijdenis (LDS)
+no: Konfirmasjon (LDS)
+pt: confirmação LDS
+sv: Konfirmation (RDS)
 
     connections
 bg: потребителски връзки
@@ -3857,6 +3998,18 @@ sk: spopolnený/spopolnená
 sl: ustvarjeno
 sv: kremerad
 
+    cremation
+de: Feuerbestattung
+en: Cremation
+es: incineración
+fi: Tuhkaus
+fr: crémation
+it: cremazione
+nl: Crematie
+no: Kremasjon
+pt: cremação
+sv: Kremering
+
     database forum
 af: databasis forum
 bg: форум на базата от данни
@@ -4077,6 +4230,18 @@ oc: font del decès
 pt: fonte do óbito
 sv: Död
 
+    decoration
+de: Dekoration
+en: Medal
+es: condecoración
+fi: Mitali
+fr: décoration
+it: decorazione
+nl: Medaille
+no: Medalje
+pt: condecoração
+sv: Dekoration
+
     delete
 af: verwyder
 bg: да няма
@@ -4105,6 +4270,18 @@ ru: удалить :a:
 sk: zmazať
 sl: izbriši
 sv: ta bort
+
+    demobilisationMilitaire
+de: militärische Demobilisierung
+en: Demobilization
+es: licencia militar
+fi: Demobilisaatio
+fr: démobilisation militaire
+it: Smobilitazione Militare
+nl: Demobilisatie
+no: Demobilisering
+pt: desmobilização militar
+sv: Demobilisering
 
     descendants
 af: Afstammelinge
@@ -4234,6 +4411,18 @@ no: Revisjonshistorikk
 oc: diferéncia entre las doas revisions
 pt: diferença entre as duas revisões
 sv: skillnad mellan två uppdateringar
+
+    diploma
+de: Diplom
+en: Diploma
+es: diploma
+fi: Diplomi
+fr: certificat
+it: diploma
+nl: Diploma
+no: Diplom
+pt: diploma
+sv: Diplom
 
     direct ancestor of %s
 de: direkter Vorfahre von %s
@@ -4463,6 +4652,18 @@ oc: plaçar aquela union en posicion
 pt: colocar esta união em posição
 sv: Byt ordning på vigsel
 
+    distinction
+de: Auszeichnung
+en: Rank
+es: distinción
+fi: Sijoitus
+fr: distinction
+it: distinzione
+nl: Rang
+no: Grad
+pt: distinção
+sv: Grad
+
     divorce
 af: geskei
 bg: развод
@@ -4491,6 +4692,18 @@ ru: развод
 sk: rozvod
 sl: ločitev
 sv: skilsmässa
+
+    divorce event
+de: Scheidung
+en: Divorce
+es: divorcio
+fi: Avioero
+fr: divorce
+it: divorzio
+nl: Echtscheiding
+no: Skilsmisse
+pt: divórcio
+sv: Skilsmässa 
 
     divorced
 af: geskei
@@ -4579,6 +4792,66 @@ sk: nie je známe
 sl: ni znano
 sv: vet ej
 
+    dotation
+de: dotation
+en: Endowment
+es: dotación
+fi: Lahjoitus
+fr: dotation
+it: dote
+nl: Schenking
+no: Stiftelse av legat
+pt: dotação
+sv: Donation
+
+    dotationLDS
+de: Dotations HLT
+en: Endowment (LDS)
+es: dotación LDS
+fi: Lahjoitus (LDS)
+fr: dotation LDS
+it: Dotazione LDS (mormonismo)
+nl: Schenking (LDS)
+no: Stiftelse av legat (LDS)
+pt: dotação LDS
+sv: Donation (LDS)
+
+    education
+de: Ausbildung
+en: Education
+es: educación
+fi: Koulutus
+fr: éducation
+it: educazione
+nl: Opleiding
+no: Utdannelse
+pt: educação
+sv: Utbildning
+
+    election
+de: Wahl
+en: Election
+es: élección
+fi: Luottamustoimet
+fr: élection
+it: Elezione
+nl: Verkiezing
+no: Valg
+pt: eleição
+sv: Val
+
+    emigration
+de: Emigration
+en: Emigration
+es: emigración
+fi: Siirtolaisuus maasta
+fr: émigration
+it: emigrazione
+nl: Emigratie
+no: Utvandring
+pt: emigração
+sv: Utvandring
+
     end
 af: einde
 bg: край
@@ -4607,6 +4880,18 @@ ru: кончая
 sk: koniec
 sl: konec
 sv: slutar
+
+    engage event
+de: Verlobung
+en: Engagement
+es: petición mano
+fi: Kihlaus
+fr: fiançailles
+it: fidanzamento
+nl: Verloving
+no: Forlovelse
+pt: noivado
+sv: Förlovning
 
     engaged
 af: verloof
@@ -4726,6 +5011,18 @@ sl: posestvo
 sv: plats
 zh:  地点
 
+    event/events
+de: Ereignis/Ereignisse
+en: fact/facts
+es: evento/eventos
+fi: tapahtuma/tapahtuma
+fr: événement/événements
+it: evento/evento
+nl: evenement/evenementen
+no: hendelse/hendelse
+pt: evento/eventos
+sv: Händelse/Händelse
+
     exact
 af: presies
 bg: точно
@@ -4755,6 +5052,18 @@ ru: в точности
 sk: presne
 sl: točno
 sv: exakt
+
+    excommunication
+de: Exkommunizierung
+en: Excommunication
+es: excomunión
+fi: Ekskommunikaatio
+fr: excommunication
+it: scomunica
+nl: Excommunicatie
+no: Bannlysing
+pt: excomunhão
+sv: Bannlysning
 
     executed (legally killed)
 af: teregsgestel
@@ -4968,6 +5277,18 @@ ru: семья:a:-ю:g:-и/семьи
 sk: rodina:a:-u/rodiny
 sl: družina/družine
 sv: familj/familjer
+
+    familyLinkLDS
+de: Familien Link-HLT
+en: Family Link (LDS)
+es: enlace familiar LDS
+fi: Perheyhteys (LDS)
+fr: lien parental LDS
+it: Legame di parentela LDS (mormonismo)
+nl: Familierelatie (LDS)
+no: Famile-lenke (LDS)
+pt: ligação familiar LDS
+sv: Familjeband (RDS)
 
     father/mother
 af: vader/moeder
@@ -5188,6 +5509,18 @@ sl: osebno ime/osebna imena
 sv: förnamn/förnamn
 zh:  名
 
+    firstCommunion
+de: erste Kommunion
+en: First Communion
+es: primera comunión
+fi: Ensimmäinen ehtoollinen
+fr: première communion
+it: funerali
+nl: Eerste Communie
+no: Første forbindelse
+pt: primeira comunhão
+sv: Första nattvard
+
     for the first names by alphabetic order
 af: om die voorname in alfabetiese volgorde te kry
 bg: за собствените имена по азбучен ред
@@ -5332,6 +5665,18 @@ sk: súrodenci
 sl: bratje in sestre
 sv: syskon
 
+    funeral
+de: Bestattung
+en: Funeral
+es: funerales
+fi: Hautajaiset
+fr: funérailles
+it: cerimonia di laurea
+nl: Begrafenis
+no: Begravelse
+pt: funeral
+sv: Begravning
+
     generation/generations
 af: geslag/geslagte
 bg: поколение/поколения
@@ -5418,6 +5763,18 @@ ru: крестник/крестница/крестник
 sk: krstný syn/krstná dcéra/krstné deti
 sl: krščenec/krščenka/krščenci
 sv: gudson/guddotter/gudbarn
+
+    graduate
+de: Graduierungsfeier
+en: Graduation
+es: graduación
+fi: Valmistuminen
+fr: diplôme
+it: diploma
+nl: Eindexamen
+no: Utdannelse
+pt: formatura
+sv: Examen
 
     grand-parents
 af: grootouers
@@ -5815,6 +6172,18 @@ sk: horizontálne
 sl: vodoravno
 sv: horisontellt
 
+    hospitalisation
+de: Krankenhausaufenthalt
+en: Hospitalization
+es: hospitalización
+fi: Sairaalahoito
+fr: hospitalisation
+it: ospedalizzazione
+nl: Ziekenhuisopname
+no: Hospitalisering
+pt: hospitalização
+sv: Sjukhusvistelse
+
     husband/wife
 af: man/vrou
 bg: съпруг/съпруга
@@ -5910,6 +6279,18 @@ fr: si titres/public/privé
 it: se titoli/pubblico/privato
 oc: si i a de títols/public/privat
 
+    illness
+de: Krankheit
+en: Disease
+es: enfermedad
+fi: Sairaus
+fr: maladie
+it: malattia
+nl: Ziekte
+no: Sykdom
+pt: doença
+sv: Sjukdom
+
     image deleted
 af: prent ontbreek
 bg: изображението е премахнато
@@ -5996,6 +6377,18 @@ ru: картинку
 sk: obrázok/obrázky
 sl: slika/slike
 sv: bild/bilder
+
+    immigration
+de: Immigration
+en: Immigration
+es: inmigración
+fi: Siirtolaisuus maahan
+fr: immigration
+it: immigrazione
+nl: Immigratie
+no: Innvandring
+pt: imigração
+sv: Invandring
 
     in (month year)
 af: in
@@ -6119,8 +6512,8 @@ it: includere i coniugi
 lv: ieskaitot dzīvesbiedrus
 nl: inclusief echtgenoten
 no: inkluder ektefeller
-pl: pokaż małżonków
 oc: inclure los conjunts
+pl: pokaż małżonków
 pt: incluir os cônjugues
 ro: include soti
 ru: включая супругов
@@ -6797,6 +7190,18 @@ sk: zoznam
 sl: seznam
 sv: lista/trädlista
 
+    listePassenger
+de: Passagierliste
+en: Passenger List
+es: lista de pasajeros
+fi: Matkustajaluettelo
+fr: liste des passagers
+it: Elenco dei passeggeri
+nl: Passagierslijst
+no: Passasjerliste
+pt: lista de passageiros
+sv: Passagerarlista
+
     lists and charts
 de: Stammbäume, Listen und Zustände
 en: Charts and Lists
@@ -7037,6 +7442,30 @@ oc: òme/femna/se sap pas
 pt: masculino/feminino/não especificado
 sv: manling/kvinnlig/okänt
 
+    marriage bann
+de: Aufgebot
+en: Marriage Bann
+es: amonestaciones
+fi: Aviokielto
+fr: bans de mariage
+it: Pubblicazioni di matrimonio
+nl: Ondertrouw
+no: Ta ut lysning
+pt: proibição de casamento
+sv: Förbjudet äktenskap
+
+    marriage contract
+de: Ehevertrag
+en: Marriage Contract
+es: contrato de matrimonio
+fi: Vihkitodistus
+fr: contrat de mariage
+it: Contratto di matrimonio
+nl: Huwelijkse Voorwaarden
+no: Ektepakt
+pt: contrato de casamento
+sv: Äktenskapförord
+
     marriage date
 de: Hochzeitstag
 en: Date of marriage
@@ -7049,6 +7478,18 @@ no: Ekteskapsdato
 oc: data del maridatge
 pt: data de casamento
 sv: Datum för giftermål
+
+    marriage event
+de: Heirat
+en: Marriage
+es: matrimonio
+fi: Avioliitto
+fr: mariage
+it: matrimonio
+nl: Huwelijk
+no: Ekteskap
+pt: casamento
+sv: Bröllop
 
     marriage had occured after the death of %t
 af: huwelik plaasgevind het nadat %t dood
@@ -7109,6 +7550,18 @@ sk: manželstvo bolo uzavreté pred narodením %t
 sl: sklenjena zakonska zveza pred rojstvom %t
 sv: äktenskapet ägde rum före %t födseln
 zh: 結婚前%t出生的地方
+
+    marriage licence
+de: Eheerlaubnis
+en: Marriage License
+es: licencia de matrimonio
+fi: Vihkilupa
+fr: licence de mariage
+it: Licenza di matrimonio
+nl: Huwelijkstoestemming
+no: Vielsesattest
+pt: licença de casamento
+sv: Äktenskapslicens
 
     marriage notes
 de: notizen zu den Ehen
@@ -7525,6 +7978,42 @@ sk: správa:a:-u/predchádzajúca správa/predchádzajúce správy/nasledujúca 
 sl: sporočilo/prejšnje sporočilo/prejšnja sporočila/naslednje sporočilo
 sv: meddelande/föregående meddelande/föregående meddelande/nästa meddelande
 
+    militaryDistinction
+de: militärische Auszeichnung
+en: Military Decoration
+es: distinción militar
+fi: Armeijan kunniamerkit
+fr: distinction militaire
+it: Decorazione militare
+nl: Onderscheiding
+no: Militær utmerkelse
+pt: distinção militar
+sv: Militär utmärkelse
+
+    militaryPromotion
+de: militärische Promotion
+en: Military Promotion
+es: promoción militar
+fi: Ylennys
+fr: promotion militaire
+it: Promozione militare
+nl: Promotie
+no: Militær forfremmelse
+pt: promoção militar
+sv: Militär avancemang
+
+    militaryService
+de: Militärdienst
+en: Conscription
+es: servicio militar
+fi: Asevelvollisuus
+fr: service militaire
+it: Servizio militare
+nl: Dienstplicht
+no: Verneplikt
+pt: serviço militar
+sv: Värnplikt
+
     miscellaneous
 de: Verschiedenes
 en: Misc
@@ -7670,6 +8159,18 @@ no: Ektefelle ukjent
 oc: conjunt que manca
 pt: cônjuge em falta
 sv: saknade maka/make
+
+    mobilisationMilitaire
+de: Mobilmachung
+en: Mobilization
+es: mobilización militar
+fi: Mobilisaatio
+fr: mobilisation militaire
+it: Mobilitazione militare
+nl: Mobilisatie
+no: Mobilisering
+pt: mobilização militar
+sv: Mobilisering
 
     modification successful
 de: Änderung durchgeführt
@@ -7965,6 +8466,18 @@ ru: имя %s уже использовано %tэтим человеком%t
 sk: meno %s už má táto %tosoba%t
 sl: ime %s že uporablja %tta oseba%t
 sv: namn %s används redan av %tdenna person%t
+
+    naturalisation
+de: Einbürgerung
+en: Naturalization
+es: naturalización
+fi: Naturalisointi
+fr: naturalisation
+it: naturalizzazione
+nl: Naturalisatie
+no: Statsborgerskap
+pt: naturalização
+sv: Naturalisation
 
     navigation
 af: stap met
@@ -8870,6 +9383,7 @@ af: uit die %s geslag
 bg: от %s поколение
 br: eus an %s rummad
 ca: a la %s generació
+ca: a la %s generacion
 cs: %s. generace
 da: af den %s generation
 de: der %s Generation
@@ -8885,7 +9399,6 @@ it: della %s generazione
 lv: %s-ā paaudzē
 nl: van de %s generatie
 no: av den %s generasjon
-ca: a la %s generacion
 pl: w %s. pokoleniu
 pt: da %s geração
 ro: de generatia %s
@@ -9159,6 +9672,18 @@ sk: alebo
 sl: ali
 sv: eller
 
+    ordination
+de: Ordination
+en: Ordinance
+es: ordenación
+fi: Määräys
+fr: ordination
+it: ordinazione
+nl: Inwijding
+no: Forordning
+pt: ordenação
+sv: Förordning
+
     other action
 af: ander stappe
 bg: други действия
@@ -9185,6 +9710,18 @@ sk: ďalšie akcie
 sl: druge dejavnosti
 sv: andra åtgärder
 zh: 其他行動
+
+    PACS
+de: verfestigte Lebensgemeinschaft
+en: Civil Marriage
+es: PACS
+fi: Siviilivihkiminen
+fr: PACS
+it: Patto Civile di Solidarietà
+nl: Burgerlijk Huwelijk
+no: Borgelig vielse
+pt: PACS
+sv: Borgerligt äktenskap
 
     parents
 af: ouers
@@ -9635,6 +10172,18 @@ sk: súkromé
 sl: zasebno
 sv: privat
 
+    property
+de: persönliches Eigentum
+en: Property
+es: propiedad
+fi: Omaisuus
+fr: propriété
+it: proprietà
+nl: Eigendom
+no: Eiendom
+pt: propriedade
+sv: Egendom
+
     public
 af: openbare
 bg: общ
@@ -9721,6 +10270,18 @@ ru: прозвище
 sk: prívlastok
 sl: oznaka
 sv: smeknamn
+
+    recensement
+de: Volkszählung
+en: Census
+es: censo
+fi: Väestönlaskenta
+fr: recensement
+it: censimento
+nl: Volkstelling
+no: Folketelling
+pt: recenseamento
+sv: Folkräkning
 
     recognized son/recognized daughter/recognized child
 af: aanvaarde seun/aanvaarde dogter/aanvaarde kind
@@ -10045,6 +10606,18 @@ sk: vzťah %t s
 sl: zveza z %t
 sv: förhållande%t med
 
+    residence
+de: Wohnsitz
+en: Residence
+es: residencia
+fi: Asuinpaikka
+fr: résidence
+it: residenza
+nl: Woonplaats
+no: Bopel
+pt: residência
+sv: Bostad
+
     retired
 de: Ruhestand
 en: Retirement
@@ -10096,6 +10669,42 @@ no: Samme som Sosa #
 oc: identic(a) al n° Sosa #
 pt: idêntico ao nº Sosa
 sv: Samma ättling som n° Sosa
+
+    scellentChildLDS
+de: HLT Kindes-Siege
+en: Sealing Child (LDS)
+es: sellamiento de hijo LDS
+fi: Sinetöity lapsi (LDS)
+fr: scellage d'enfant LDS
+it: Legame eterno di figli
+nl: Kindverbinding (LDS)
+no: Besegling med barn (LDS)
+pt: selamento de criança LDS
+sv: Besegling med barn (LDS)
+
+    scellentParentLDS
+de: HTL Eltern-Versiegelung
+en: Sealing Parent (LDS)
+es: sellamiento con padres LDS
+fi: Sinetöity vanhempi (LDS)
+fr: scellement aux parents LDS
+it: Legame eterno con i genitori LDS (mormonismo)
+nl: Ouderverbinding (LDS)
+no: Besegling med forelder (LDS)
+pt: selamento aos pais LDS
+sv: Besegling med föräldrar (LDS)
+
+    scellentSpouseLDS
+de: HTL Ehepartner-Versiegelung
+en: Sealing Spouse (LDS)
+es:  sellamiento con cónyuge LDS
+fi: Sinetöity puoliso (LDS)
+fr: scellement au conjoint LDS
+it: Legame eterno con la sposa LDS (mormonismo)
+nl: Echtverbinding (LDS)
+no: Besegling med ektefelle (LDS)
+pt: selamento ao cônjuge LDS
+sv: Besegling med syskon (LDS)
 
     search/case sensitive
 bg: търсене/с различаване на главни и малки букви
@@ -10409,6 +11018,18 @@ ru: послать
 sk: pošli
 sl: pošlji
 sv: skicka
+
+    separate event
+de: Trennung
+en: Separation
+es: separación
+fi: Ero
+fr: séparation
+it: separazione
+nl: Scheiding van tafel en bed
+no: Separasjon
+pt: separação
+sv: Separation
 
     separated
 af: separated
@@ -12039,6 +12660,18 @@ ru: этот форум модерируется
 sl: forum moderira
 sv: detta forum är ändrat
 
+    time line
+de: Chronologie
+en: Timeline
+es: Cronología
+fi: Aikajana
+fr: Chronologie
+it: Cronologia
+nl: Tijdlijn
+no: Kronologi
+pt: Cronologia
+sv: Kronologi
+
     title/titles
 af: titel/titels
 bg: титла/титли
@@ -12774,6 +13407,18 @@ ru: проверить/удалить
 sk: potvrdiť/zmazať
 sv: giltligt/tas bort
 
+    venteBien
+de: Verkauf von Besitztum
+en: Sale of Property
+es: venta de un bien
+fi: Omaisuuden myynti
+fr: vente d'un bien
+it: Vendita di un bene
+nl: Verkoop van eigendom
+no: Salg av eiendom
+pt: venda de um bem
+sv: Försäljning av egendom
+
     version
 de: Version
 en: Version
@@ -12899,6 +13544,18 @@ no: sted for vigsel
 oc: lòc de l'union
 pt: local da união
 sv: vigselort
+
+    will
+de: letzter Wille
+en: Will
+es: testamento
+fi: Testamentti
+fr: testament
+it: testamento
+nl: Testament
+no: Testamente
+pt: testamento
+sv: Testament
 
     with
 af: met
